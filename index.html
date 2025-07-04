@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Juno & Soldado</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=EB+Garamond:ital,wght@0,400;1,400&family=Dancing+Script:wght@400;700&display=swap" rel="stylesheet">
+    
+    <!-- Biblioteca para o efeito de virar a página -->
+    <script src="https://cdn.jsdelivr.net/npm/page-flip@2.0.7/dist/js/page-flip.browser.min.js"></script>
+    
+    <style>
+        body {
+            font-family: 'EB Garamond', serif; /* Fonte padrão para textos */
+            background-color: #e9e5e0;
+            background-image: url('https://www.transparenttextures.com/patterns/paper-fibers.png');
+            color: #3d3d3d;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            counter-reset: page-counter;
+        }
+
+        .font-serif-display { font-family: 'Playfair Display', serif; }
+        .font-script { font-family: 'Dancing Script', cursive; }
+
+        .book-container {
+            width: 90vw;
+            height: 70vh;
+            max-width: 1000px;
+            max-height: 700px;
+        }
+
+        .flip-book .page {
+            background: linear-gradient(to right, #fdfbf7 98%, #f2efe8 100%); /* Gradiente sutil */
+            border: 1px solid #e0d9d1;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            position: relative;
+        }
+        
+        /* Sombra da lombada */
+        .flip-book .page:not(:first-child):not(:last-child)::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 10px;
+            background: linear-gradient(to right, rgba(0,0,0,0.05), transparent);
+            z-index: 2;
+            pointer-events: none;
+        }
+        .flip-book .page.odd:not(:first-child):not(:last-child)::before {
+             left: 0;
+        }
+        .flip-book .page.even:not(:first-child):not(:last-child)::before {
+            right: 0;
+            transform: scaleX(-1);
+        }
+
+        .flip-book .page-content {
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+            overflow: hidden;
+        }
+        
+        .page-number {
+            counter-increment: page-counter;
+            content: counter(page-counter);
+            position: absolute;
+            bottom: 1rem;
+            right: 1.5rem;
+            font-size: 0.8rem;
+            color: #b0a39a;
+        }
+        .page:first-child .page-number, .page:last-child .page-number {
+            display: none;
+        }
+
+        .polaroid {
+            background-color: white;
+            padding: 0.5rem;
+            padding-bottom: 2rem;
+            border: 1px solid #e0e0e0;
+            box-shadow: 2px 3px 8px rgba(0,0,0,0.1);
+            position: relative;
+        }
+        .polaroid img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            filter: grayscale(1) sepia(0.2);
+        }
+        .star {
+            font-family: serif;
+            position: absolute;
+            color: #b09a8e;
+            font-size: 1.5rem;
+            opacity: 0.7;
+        }
+        
+        .controls {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 1rem;
+            z-index: 1000;
+        }
+        .control-btn {
+            background-color: #fdfbf7;
+            border: 1px solid #d1c7c2;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+            font-family: 'Playfair Display', serif;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            transition: all 0.2s ease;
+        }
+        .control-btn:hover {
+            background-color: #fff;
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="book-container" id="book-wrapper">
+        <div class="flip-book" id="book">
+            <!-- Página 1: Capa -->
+            <div class="page">
+                <div class="page-content text-center">
+                    <h1 class="text-4xl md:text-6xl font-serif-display text-stone-800">Juno & Soldado</h1>
+                    <p class="mt-4 text-lg italic text-stone-500">"Se as estrelas sussurrassem, diriam o teu nome."</p>
+                    <p class="absolute bottom-10 text-sm text-stone-400">Vire a página para começar</p>
+                </div>
+            </div>
+
+            <!-- Página 2 & 3: Alma Gémea (NOVO DESIGN) -->
+            <div class="page">
+                <div class="page-content justify-center items-center relative">
+                    <img src="https://www.transparenttextures.com/patterns/worn-dots.png" class="absolute inset-0 w-full h-full object-cover opacity-20" alt="Textura de fundo">
+                    <div class="polaroid transform rotate-2 w-3/4 max-w-xs">
+                        <img src="https://i.postimg.cc/sGCTtZSx/7976c2ef3233b7c17a69434ed84079e8.jpg" alt="Juno e Soldado">
+                    </div>
+                    <p class="font-script text-2xl text-stone-400 absolute bottom-20 right-10 transform rotate-12">eterno</p>
+                    <div class="page-number"></div>
+                </div>
+            </div>
+            <div class="page">
+                <div class="page-content text-center p-8">
+                    <h2 class="text-4xl md:text-5xl font-serif-display mb-6 text-stone-800">Alma Gémea</h2>
+                    <div class="space-y-4">
+                        <p class="text-xl md:text-2xl italic leading-relaxed text-stone-700 max-w-md">
+                            Eles encontraram-se como o vento encontra o mar — inevitável. Juno e Soldado não foram apenas atraídos um pelo outro, foram puxados por uma força mais antiga que o tempo.
+                        </p>
+                        <p class="text-xl md:text-2xl italic leading-relaxed text-stone-700 max-w-md">
+                            A cada respiração, eles encontravam as peças que não sabiam que lhes faltavam.
+                        </p>
+                    </div>
+                    <div class="absolute bottom-8 right-8 text-stone-400 text-sm font-serif-display">26 / 07</div>
+                    <div class="page-number"></div>
+                </div>
+            </div>
+
+            <!-- Página 4: Conhece a Juno -->
+            <div class="page">
+                <div class="page-content text-center">
+                    <h2 class="font-script text-4xl text-stone-700 mb-6">Conhece a Juno</h2>
+                    <div class="relative h-64 w-full flex justify-center items-center mb-6">
+                        <div class="polaroid absolute transform -rotate-12" style="width: 120px; height: 145px; top: 0; left: 15%;">
+                            <img src="https://i.postimg.cc/14MWW4Xm/6234a15300aac579d86245071211e92a.jpg" alt="Juno 1">
+                        </div>
+                        <div class="polaroid absolute transform rotate-3 z-10" style="width: 145px; height: 170px;">
+                            <img src="https://i.postimg.cc/JGnpSmHb/9673c18d99040cc43ec478350d9eee5d.jpg" alt="Juno 2">
+                        </div>
+                        <div class="polaroid absolute transform rotate-12" style="width: 110px; height: 135px; top: 10px; right: 18%;">
+                             <img src="https://i.postimg.cc/Ty8QyD79/bfff53f979f547361d32177871516fea.jpg" alt="Juno 3">
+                        </div>
+                    </div>
+                    <p class="text-lg md:text-xl italic text-stone-500 max-w-xs mx-auto mt-12">
+                        "Se a lua sorrisse, ela parecer-se-ia com a Juno — bela, mas aniquiladora."
+                    </p>
+                    <div class="page-number"></div>
+                </div>
+            </div>
+            
+            <!-- Página 5: Conhece o Soldado -->
+            <div class="page">
+                <div class="page-content text-center">
+                    <h2 class="font-script text-4xl text-stone-700 mb-6">Conhece o Soldado</h2>
+                    <div class="relative h-64 w-full flex justify-center items-center mb-6">
+                        <div class="polaroid absolute transform rotate-12" style="width: 110px; height: 135px; top: 10px; left: 18%;">
+                            <img src="https://i.postimg.cc/VS1nQBZ3/977c9905a8e2764e91108e6d7de5162c.jpg" alt="Soldado 1">
+                        </div>
+                        <div class="polaroid absolute transform -rotate-3 z-10" style="width: 145px; height: 170px;">
+                            <img src="https://i.postimg.cc/qtLnkh9g/67e17f8cc966703f71e5c9cdf82e8301.jpg" alt="Soldado 2">
+                        </div>
+                        <div class="polaroid absolute transform -rotate-12" style="width: 120px; height: 145px; top: 0; right: 15%;">
+                             <img src="https://i.postimg.cc/1n3F4RQB/3dbc6e8fc62a58897997fcdc2167e30f.jpg" alt="Soldado 3">
+                        </div>
+                    </div>
+                    <p class="text-lg md:text-xl italic text-stone-500 max-w-xs mx-auto mt-12">
+                        "O Soldado não era uma chama, mas a dor que fica depois dela — quente, profunda, eterna."
+                    </p>
+                    <div class="page-number"></div>
+                </div>
+            </div>
+
+            <!-- Página 6 & 7: Final -->
+            <div class="page">
+                <div class="page-content text-left p-8">
+                    <span class="star" style="top: 2rem; left: 2rem;">★</span>
+                    <h3 class="text-3xl md:text-4xl font-serif-display text-stone-700">Até ao fim</h3>
+                    <p class="text-base md:text-lg leading-relaxed text-stone-600 mt-4">
+                        O amor deles não era suave. Ardia. Mas nas cinzas, eles construíram algo sagrado.
+                    </p>
+                    <span class="star" style="bottom: 2rem; right: 3rem; font-size: 1rem;">★</span>
+                    <div class="page-number"></div>
+                </div>
+            </div>
+            <div class="page">
+                <div class="page-content p-8">
+                    <div class="relative p-6 bg-white/30 backdrop-blur-sm border border-stone-200/50 w-full h-full flex items-center justify-center">
+                        <p class="text-lg md:text-xl italic text-center text-stone-800">
+                           “As memórias estavam cheias deles — talvez os mais assombrosos e ternos de todos os fantasmas.”
+                        </p>
+                     </div>
+                     <div class="page-number"></div>
+                </div>
+            </div>
+
+            <!-- Página 8: Contracapa -->
+            <div class="page">
+                <div class="page-content text-center">
+                    <div class="font-script text-5xl text-stone-700">
+                        <span>Juno</span> & <span>Soldado</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Controles -->
+    <div class="controls">
+        <button id="prev-btn" class="control-btn">Anterior</button>
+        <button id="next-btn" class="control-btn">Próxima</button>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const bookWrapper = document.getElementById('book-wrapper');
+            const book = document.getElementById('book');
+            const prevBtn = document.getElementById('prev-btn');
+            const nextBtn = document.getElementById('next-btn');
+
+            // Inicializa o PageFlip
+            const pageFlip = new St.PageFlip(book, {
+                width: bookWrapper.clientWidth,
+                height: bookWrapper.clientHeight,
+                showCover: true // Mostra a primeira página como capa
+            });
+            pageFlip.loadFromHTML(document.querySelectorAll('.page'));
+
+            // Event listeners para os botões
+            prevBtn.addEventListener('click', () => {
+                pageFlip.flipPrev();
+            });
+
+            nextBtn.addEventListener('click', () => {
+                pageFlip.flipNext();
+            });
+            
+            // Ajusta o tamanho do livro ao redimensionar a janela
+            window.addEventListener('resize', () => {
+                pageFlip.updateFromOptions({
+                    width: bookWrapper.clientWidth,
+                    height: bookWrapper.clientHeight,
+                });
+            });
+        });
+    </script>
+</body>
+</html>
